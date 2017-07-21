@@ -22,7 +22,8 @@ module.exports = {
   getMemberChallenges,
   getMemberGroups,
   getProject,
-  authorizations
+  authorizations,
+  searchMember
 };
 
 const files = {};
@@ -743,6 +744,112 @@ function* authorizations() {
       "content": {
         "token": "FAKE-TOKEN"
       }
+    }
+  }
+}
+
+const MEMBERS = [
+   {
+      "userId":132456,
+      "handle":"heffan"
+   },
+   {
+      "userId":20,
+      "handle":"dok_tester"
+   },
+   {
+      "userId":21,
+      "handle":"dok_tester1"
+   },
+   {
+      "userId":132457,
+      "handle":"super"
+   },
+   {
+      "userId":132458,
+      "handle":"user"
+   },
+   {
+      "userId":124764,
+      "handle":"Hung"
+   },
+   {
+      "userId":124766,
+      "handle":"twight"
+   },
+   {
+      "userId":124772,
+      "handle":"Partha"
+   },
+   {
+      "userId":124776,
+      "handle":"sandking"
+   },
+   {
+      "userId":124834,
+      "handle":"lightspeed"
+   },
+   {
+      "userId":124835,
+      "handle":"reassembler"
+   },
+   {
+      "userId":124836,
+      "handle":"annej9ny"
+   },
+   {
+      "userId":124852,
+      "handle":"plinehan"
+   },
+   {
+      "userId":124853,
+      "handle":"chelseasimon"
+   },
+   {
+      "userId":124856,
+      "handle":"wyzmo"
+   },
+   {
+      "userId":124857,
+      "handle":"cartajs"
+   },
+   {
+      "userId":124861,
+      "handle":"ksmith"
+   },
+   {
+      "userId":124916,
+      "handle":"Yoshi"
+   },
+   {
+      "userId":22770213,
+      "handle":"Applications"
+   },
+   {
+      "userId":22719217,
+      "handle":"Components"
+   },
+   {
+      "userId":22719218,
+      "handle":"liquid_user"
+   },
+   {
+      "userId":22873364,
+      "handle":"LCSUPPORT"
+   }
+]
+
+function* searchMember(){
+  var q = this.query.handle;
+  this.body = {
+    "id": "105bfe9c-e85a-4d74-8a39-81023565053b",
+    "result": {
+      "success": true,
+      "status": 200,
+      "metadata": null,
+      "content": MEMBERS.filter(function(member){
+        return member['handle'].toLowerCase().indexOf(q.toLowerCase()) > -1
+        })
     }
   }
 }

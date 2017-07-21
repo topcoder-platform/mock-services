@@ -12,12 +12,14 @@ const router = require('koa-router')();
 const routerUpload = require('koa-router')();
 const routes = require('./routes');
 const config = require('./config');
-//const cors = require('koa-cors');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const cors = require('koa-cors');
 
 const app = koa();
 
 //app.use(cors());
-
 app.use(function *(next) {
   const id = `mock-${new Date().getTime()}`;
   // mock succesfull response with fake request id
@@ -74,13 +76,20 @@ router.get("/v3/groups", routes.getMemberGroups);
 // Identity routes
 router.post("/v3/authorizations", routes.authorizations);
 
+router.get("/v3/members/_search", routes.searchMember);
+
 // routerUpload doesn't have a middleware for json parsing
 // so uploaded file is not stored in the memory
 routerUpload.put('/mock-upload', routes.upload);
 
+var options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('certificate.pem')
+}
 app.use(router.routes());
 app.use(routerUpload.routes());
 
+https.createServer(options, app.callback()).listen(8443);
 app.listen(config.PORT, () => {
   console.log('App listening on port %d', config.PORT);
 });
