@@ -73,6 +73,9 @@ router.get("/v3/members/:handle", routes.members);
 // query group route
 router.get("/v3/groups", routes.getMemberGroups);
 
+// query sub groups
+router.get("/v3/groups/:groupId/getSubGroups", routes.getSubGroups);
+
 // Identity routes
 router.post("/v3/authorizations", routes.authorizations);
 

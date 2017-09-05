@@ -23,7 +23,8 @@ module.exports = {
   getMemberGroups,
   getProject,
   authorizations,
-  searchMember
+  searchMember,
+  getSubGroups
 };
 
 const files = {};
@@ -204,6 +205,58 @@ function* getMemberGroups() {
           "createdAt": "2015-09-25T03:56:16.000Z"
         }
       ],
+      "version": "v3"
+    }
+  };
+}
+
+function *getSubGroups() {
+  this.body = {
+    "id": "-6b6bcc07:15bae231ad8:-5d65",
+    "result": {
+      "success": true,
+      "status": 200,
+      "metadata": null,
+      "content": {
+          "id": "1",
+          "name": "ExampleGroup1",
+          "description": "This is an example group1.",
+          "modifiedBy": 12345678,
+          "modifiedAt": "2015-09-25T03:56:16.000Z",
+          "createdBy": 12345678,
+          "createdAt": "2015-09-25T03:56:16.000Z",
+          "subGroups": [
+            {
+              "id": "2",
+              "name": "ChildGroup1",
+              "description": "This is an example group2.",
+              "modifiedBy": 12345678,
+              "modifiedAt": "2015-09-25T03:56:16.000Z",
+              "createdBy": 12345678,
+              "createdAt": "2015-09-25T03:56:16.000Z",
+              "subGroups": [
+                {
+                  "id": "4",
+                  "name": "ChildGroup4",
+                  "description": "This is an example group4.",
+                  "modifiedBy": 12345678,
+                  "modifiedAt": "2015-09-25T03:56:16.000Z",
+                  "createdBy": 12345678,
+                  "createdAt": "2015-09-25T03:56:16.000Z"
+                }
+              ]
+            },
+            {
+              "id": "3",
+              "name": "ChildGroup2",
+              "description": "This is an example group3.",
+              "modifiedBy": 12345678,
+              "modifiedAt": "2015-09-25T03:56:16.000Z",
+              "createdBy": 12345678,
+              "createdAt": "2015-09-25T03:56:16.000Z"
+            }
+          ]
+      },
       "version": "v3"
     }
   };
