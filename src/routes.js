@@ -25,7 +25,8 @@ module.exports = {
   authorizations,
   searchMember,
   getSubGroups,
-  getGroupMembers
+  getGroupMembers,
+  getParentGroups
 };
 
 const files = {};
@@ -212,7 +213,7 @@ function* getMemberGroups() {
        "name": "Member Admins"
     });
   } else if(memberId == "124916"){
-    groups=[];
+    groups = [];
   }
   
   this.body = {
@@ -276,6 +277,55 @@ function *getSubGroups() {
       },
       "version": "v3"
     }
+  };
+}
+
+function *getParentGroups() {
+  this.body = {
+    "id": "-13eae784:15ea2013504:-7ff7",
+    "result": {
+        "success": true,
+        "status": 200,
+        "metadata": null,
+        "content": {
+            "id": "4",
+            "modifiedBy": "1",
+            "modifiedAt": "2017-08-21T16:00:00.000Z",
+            "createdBy": "1",
+            "createdAt": "2017-08-21T16:00:00.000Z",
+            "name": "group 4",
+            "description": "group 4 desc",
+            "privateGroup": false,
+            "selfRegister": false,
+            "subGroups": null,
+            "parentGroup": {
+                "id": "2",
+                "modifiedBy": "1",
+                "modifiedAt": "2017-08-21T16:00:00.000Z",
+                "createdBy": "1",
+                "createdAt": "2017-08-21T16:00:00.000Z",
+                "name": "group 2",
+                "description": "group 2 desc",
+                "privateGroup": false,
+                "selfRegister": false,
+                "subGroups": null,
+                "parentGroup": {
+                    "id": "1",
+                    "modifiedBy": "1",
+                    "modifiedAt": "2017-08-21T16:00:00.000Z",
+                    "createdBy": "1",
+                    "createdAt": "2017-08-21T16:00:00.000Z",
+                    "name": "group 1",
+                    "description": "group 1 desc",
+                    "privateGroup": false,
+                    "selfRegister": false,
+                    "subGroups": null,
+                    "parentGroup": null
+                }
+            }
+        }
+    },
+    "version": "v3"
   };
 }
 
