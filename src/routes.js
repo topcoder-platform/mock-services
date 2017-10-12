@@ -24,7 +24,8 @@ module.exports = {
   getProject,
   authorizations,
   searchMember,
-  getSubGroups
+  getSubGroups,
+  getGroupMembers
 };
 
 const files = {};
@@ -179,16 +180,11 @@ function* members() {
 }
 
 function* getMemberGroups() {
-  this.body = {
-    "id": "-6b6bcc07:15bae231ad8:-5d65",
-    "result": {
-      "success": true,
-      "status": 200,
-      "metadata": null,
-      "content": [
+  let memberId = this.request.query.memberId;
+  let groups = [
         {
-          "id": "3",
-          "name": "ExampleGroup1",
+          "id": 14,
+          "name": "TopCoder Studio User",
           "description": "This is an example group1.",
           "modifiedBy": 12345678,
           "modifiedAt": "2015-09-25T03:56:16.000Z",
@@ -196,15 +192,36 @@ function* getMemberGroups() {
           "createdAt": "2015-09-25T03:56:16.000Z"
         },
         {
-          "id": "4",
-          "name": "ExampleGroup2",
+          "id": "10",
+          "name": "Competition User",
           "description": "This is an example group2.",
           "modifiedBy": 12345678,
           "modifiedAt": "2016-05-29T12:12:52.000Z",
           "createdBy": 12345678,
           "createdAt": "2015-09-25T03:56:16.000Z"
         }
-      ],
+      ];
+  if (typeof(memberId) === "undefined" || memberId == null){
+
+    groups.push({
+       "id": 2000115,
+       "name": "Admin"
+    });
+    groups.push({
+       "id": 15471940,
+       "name": "Member Admins"
+    });
+  } else if(memberId == "124916"){
+    groups=[];
+  }
+  
+  this.body = {
+    "id": "-6b6bcc07:15bae231ad8:-5d65",
+    "result": {
+      "success": true,
+      "status": 200,
+      "metadata": null,
+      "content": groups,
       "version": "v3"
     }
   };
@@ -788,7 +805,7 @@ function* getProject() {
         "totalCount": 1
         }
     }
-    } 
+    }
 }
 
 function* authorizations() {
@@ -890,10 +907,12 @@ const MEMBERS = [
       "userId":22873364,
       "handle":"LCSUPPORT"
    }
-]
+];
+
+const GROUPS = [2000115, 10, 15471940, 14];
 
 function* searchMember(){
-  var q = this.query.handle;
+  var q = this.params.handle;
   this.body = {
     "id": "105bfe9c-e85a-4d74-8a39-81023565053b",
     "result": {
@@ -906,3 +925,41 @@ function* searchMember(){
     }
   }
 }
+
+function* getGroupMembers(){
+  var groupId = Number(this.params.groupId);
+  var members = [];
+  switch(groupId){
+    case GROUPS[0]:
+      MEMBERS.slice(0,5).forEach(function(el){
+        members.push({"memberId": el["userId"], "membershipType" : "user"});
+      });
+      break;
+    case GROUPS[1]:
+      MEMBERS.slice(5,12).forEach(function(el){
+        members.push({"memberId": el["userId"], "membershipType" : "user"});
+      });
+      members.push({"memberId": 14, "membershipType" : "group"})
+      break;
+    case GROUPS[2]:
+      MEMBERS.slice(12,14).forEach(function(el){
+        members.push({"memberId": el["userId"], "membershipType" : "user"});
+      });
+      members.push({"memberId": 2000115, "membershipType" : "group"})
+      break;
+    case GROUPS[3]:
+      MEMBERS.slice(14).forEach(function(el){
+        members.push({"memberId": el["userId"], "membershipType" : "user"});
+      });
+      break;
+    }
+    this.body = {
+      "id": "105bfe9c-e85a-4d74-8a39-81023565053c",
+      "result": {
+        "success": true,
+        "status": 200,
+        "metadata": null,
+        "content": members
+      }
+    }
+  }
