@@ -19,7 +19,7 @@ const cors = require('koa-cors');
 
 const app = koa();
 
-//app.use(cors());
+app.use(cors());
 app.use(function *(next) {
   const id = `mock-${new Date().getTime()}`;
   // mock succesfull response with fake request id
@@ -70,6 +70,8 @@ router.get("/v3/members/:handle/challenges", routes.getMemberChallenges);
 // Member routes
 router.get("/v3/members/:handle", routes.members);
 
+router.get("/v3/groups/:groupId/members", routes.getGroupMembers);
+
 // query group route
 router.get("/v3/groups", routes.getMemberGroups);
 
@@ -81,7 +83,7 @@ router.get("/v3/groups/:groupId/getParentGroup", routes.getParentGroups);
 // Identity routes
 router.post("/v3/authorizations", routes.authorizations);
 
-router.get("/v3/members/_search", routes.searchMember);
+router.get("/v3/members/_suggest/:handle", routes.searchMember);
 
 // routerUpload doesn't have a middleware for json parsing
 // so uploaded file is not stored in the memory
