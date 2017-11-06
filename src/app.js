@@ -96,7 +96,10 @@ var options = {
 app.use(router.routes());
 app.use(routerUpload.routes());
 
-https.createServer(options, app.callback()).listen(8443);
-app.listen(config.PORT, () => {
-  console.log('App listening on port %d', config.PORT);
+https.createServer(options, app.callback()).listen(config.HTTPS_PORT, () => {
+  console.log('App listening on port https %d', config.HTTPS_PORT);
+});
+
+app.listen(config.HTTP_PORT, () => {
+  console.log('App listening on port http %d', config.HTTP_PORT);
 });

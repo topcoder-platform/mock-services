@@ -9,12 +9,13 @@
 const assert = require('assert');
 
 const config = {
-  PORT: process.env.PORT || 8080,
+  HTTP_PORT: process.env.HTTP_PORT || 8080,
+  HTTPS_PORT: process.env.HTTPS_PORT || 8443,
   UPLOAD_PATH: process.env.UPLOAD_PATH || '/tmp',
-  BASE_URL: process.env.BASE_URL || 'http://localhost:8080'
+  BASE_URL: process.env.BASE_URL || 'http://localhost'
 };
 
-assert.ok(config.PORT, 'PORT required');
+assert.ok(config.HTTP_PORT, 'PORT required');
 assert.ok(config.UPLOAD_PATH, 'UPLOAD_PATH required');
 assert.ok(config.BASE_URL, 'BASE_URL required');
 
